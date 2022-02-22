@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Server", "gRPC.Server\gRPC.Server.csproj", "{3BC8B5FC-EB38-43F6-8920-BA498EA5CBD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.ProtoLib", "gRPC.ProtoLib\gRPC.ProtoLib.csproj", "{2DE5D63F-8F7F-4CC3-9716-CBD4991E0876}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Client", "gRPC.Client\gRPC.Client.csproj", "{BD2152DB-6247-4DB4-BC81-3E7A6E9EE3B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BC8B5FC-EB38-43F6-8920-BA498EA5CBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC8B5FC-EB38-43F6-8920-BA498EA5CBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC8B5FC-EB38-43F6-8920-BA498EA5CBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC8B5FC-EB38-43F6-8920-BA498EA5CBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE5D63F-8F7F-4CC3-9716-CBD4991E0876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE5D63F-8F7F-4CC3-9716-CBD4991E0876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE5D63F-8F7F-4CC3-9716-CBD4991E0876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE5D63F-8F7F-4CC3-9716-CBD4991E0876}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2152DB-6247-4DB4-BC81-3E7A6E9EE3B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2152DB-6247-4DB4-BC81-3E7A6E9EE3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2152DB-6247-4DB4-BC81-3E7A6E9EE3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2152DB-6247-4DB4-BC81-3E7A6E9EE3B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

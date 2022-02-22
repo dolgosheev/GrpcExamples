@@ -1,0 +1,8 @@
+.idea/.idea.gRPC/.idea
+gRPC.Client/bin/Debug
+gRPC.Client/obj
+gRPC.ProtoLib/obj/Debug
+gRPC.ProtoLib/bin
+gRPC.ProtoLib/obj
+gRPC.Server/bin/Debug
+gRPC.Server/obj

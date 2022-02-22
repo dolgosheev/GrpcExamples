@@ -1,0 +1,25 @@
+/*
+  MIT License
+  Copyright (c) 2021 
+  Alexander Dolgosheev 
+  01.02.2022
+
+  File overview: 
+    Presentation service
+*/
+
+syntax = "proto3";
+
+option csharp_namespace = "PresentationServiceGrpc";
+
+package grpc_presentation_service.v1;
+
+import "grpc_presentation_service/entities/v1/message.proto";
+
+
+// PresentationService just for tests.
+service PresentationService {
+  // Request/Response model
+  rpc EstablishConnection (stream grpc_presentation_service.entities.v1.MessageRequest) returns (stream grpc_presentation_service.entities.v1.MessageResponse) {}
+  rpc WrapMessage (grpc_presentation_service.entities.v1.MessageRequest) returns (grpc_presentation_service.entities.v1.MessageResponse) {}
+}
