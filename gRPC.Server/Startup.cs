@@ -12,6 +12,7 @@ namespace gRPC.Server
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<Cache>();
             services.AddGrpc();
         }
 

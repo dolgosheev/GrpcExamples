@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Grpc.Core;
@@ -12,17 +15,22 @@ namespace gRPC.Server.Services
     public class PresentationService : PresentationServiceGrpc.PresentationService.PresentationServiceBase
     {
         private readonly ILogger<PresentationService> _logger;
+        private readonly Cache _cache;
+        
 
-        public PresentationService(ILogger<PresentationService> logger)
+        public PresentationService(ILogger<PresentationService> logger,Cache cache)
         {
             _logger = logger;
-        }
+            _cache = cache;
 
-        public override Task<MessageResponse> WrapMessage(MessageRequest request, ServerCallContext context)
-        {
-            return Task.FromResult(new MessageResponse
+            Task.Run(async () =>
             {
-                Message = $"response to : {request?.Message.ToUpper()}"
+                while (true)
+                {
+                    //Console.Write("Type server message :");
+                    var msg = Console.ReadLine();
+                    await ServerToClientsAsync(msg);
+                }
             });
         }
 
@@ -33,11 +41,24 @@ namespace gRPC.Server.Services
         {
             var c2S = ClientToServerAsync(requestStream, context);
 
-            var s2C = ServerToClientAsync(responseStream, context);
+            _cache._clients.Add(responseStream);
+            
+            //var s2C = ServerToClientAsync(responseStream, context);
 
-            await Task.WhenAll(c2S, s2C);
+            await Task.WhenAll(c2S);
         }
 
+        public async Task ServerToClientsAsync(string message)
+        {
+            foreach (var stream in _cache._clients.Where(stream => stream is not null))
+            {
+                await stream?.WriteAsync(new MessageResponse
+                {
+                    Message = message
+                });
+            }
+        }
+        
         private static async Task ServerToClientAsync(IServerStreamWriter<MessageResponse> responseStream,
             ServerCallContext context)
         {

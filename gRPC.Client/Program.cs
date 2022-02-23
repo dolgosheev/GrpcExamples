@@ -34,17 +34,14 @@ namespace gRPC.Client
                     await Task.Delay(2000);
                 }
             });
-
-            //
-            Task.Run(async () =>
+            
+            while (e is not null)
             {
-                while (e is not null)
-                {
-                    e?.Receive("I am client!!!");
-                    await Task.Delay(1500);
-                }
-            });
-
+                //Console.Write("Type you client message :");
+                var msg = Console.ReadLine();
+                e?.Receive(msg);
+            }
+            
             Console.ReadLine();
         }
 
