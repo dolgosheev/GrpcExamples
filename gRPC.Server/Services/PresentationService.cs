@@ -42,7 +42,7 @@ namespace gRPC.Server.Services
             var c2S = ClientToServerAsync(requestStream, context);
 
             _cache._clients.Add(responseStream);
-            
+            Console.WriteLine($"Connected new client : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
             //var s2C = ServerToClientAsync(responseStream, context);
 
             await Task.WhenAll(c2S);
@@ -78,15 +78,26 @@ namespace gRPC.Server.Services
         {
             try
             {
-                while (await requestStream.MoveNext() && !context.CancellationToken.IsCancellationRequested)
+                while (await requestStream?.MoveNext()! && !context.CancellationToken.IsCancellationRequested)
                 {
-                    var message = requestStream.Current;
-                    _logger.LogInformation("Client said {Message}", message.Message);
+                    var message = requestStream?.Current;
+                    _logger.LogInformation("Client said {Message}", message?.Message);
                 }
             }
             catch (IOException)
             {
                 _logger.LogWarning("Connection was aborted");
+                Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
+            }
+            catch (RpcException)
+            {
+                _logger.LogWarning("Connection was aborted");
+                Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
+            }
+            catch (Exception)
+            {
+                _logger.LogWarning("Connection was aborted");
+                Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
             }
         }
     }

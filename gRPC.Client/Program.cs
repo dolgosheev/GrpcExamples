@@ -23,14 +23,20 @@ namespace gRPC.Client
             _channel = new Channel($"{_ip}:{_port}", ChannelCredentials.Insecure);
             _client = new PresentationService.PresentationServiceClient(_channel);
 
-            var e = _client?.EstablishConnection();
+            var e = _client?.EstablishConnection(new Metadata
+            {
+                new ("clientid",Guid.NewGuid().ToString())
+            });
 
             Task.Run(async () =>
             {
                 while (e is null || !await e.StreamingAsync())
                 {
                     Console.WriteLine("Try reconnect...");
-                    e = _client?.EstablishConnection();
+                    e = _client?.EstablishConnection(new Metadata
+                    {
+                        new ("clientId",Guid.NewGuid().ToString())
+                    });
                     await Task.Delay(2000);
                 }
             });
