@@ -39,7 +39,7 @@ namespace gRPC.Server.Services
             IServerStreamWriter<MessageResponse> responseStream,
             ServerCallContext context)
         {
-            var c2S = ClientToServerAsync(requestStream, context);
+            var c2S = ClientToServerAsync(requestStream,responseStream, context);
 
             _cache._clients.Add(responseStream);
             Console.WriteLine($"Connected new client : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
@@ -73,7 +73,9 @@ namespace gRPC.Server.Services
             }
         }
 
-        private async Task ClientToServerAsync(IAsyncStreamReader<MessageRequest> requestStream,
+        private async Task ClientToServerAsync(
+            IAsyncStreamReader<MessageRequest> requestStream,
+            IServerStreamWriter<MessageResponse> responseStream,
             ServerCallContext context)
         {
             try
@@ -87,16 +89,19 @@ namespace gRPC.Server.Services
             catch (IOException)
             {
                 _logger.LogWarning("Connection was aborted");
+                _cache._clients.Remove(responseStream);
                 Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
             }
             catch (RpcException)
             {
                 _logger.LogWarning("Connection was aborted");
+                _cache._clients.Remove(responseStream);
                 Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
             }
             catch (Exception)
             {
                 _logger.LogWarning("Connection was aborted");
+                _cache._clients.Remove(responseStream);
                 Console.WriteLine($"Client disconnected : {context.RequestHeaders.FirstOrDefault(e=>e.Key == "clientid")?.Value}");
             }
         }
