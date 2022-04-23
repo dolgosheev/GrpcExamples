@@ -1,0 +1,59 @@
+/*
+  MIT License
+  Copyright (c) 2022 
+  Alexander Dolgosheev
+
+  File overview: 
+    Presentation service entity
+*/
+
+syntax = "proto3";
+
+option csharp_namespace = "PresentationService";
+
+package grpc_service.v1;
+
+// PresentationService just for tests.
+service PresentationService {
+    rpc BidirectionalStream (stream MessageRequest) returns (stream MessageResponse) {}
+    rpc ServerStream (stream MessageRequest) returns (MessageResponse) {}
+    rpc ClientStream (MessageRequest) returns (stream MessageResponse) {}
+    rpc RequestResponse (MessageRequest) returns (MessageResponse) {}
+}
+
+// The request message containing the string.
+message MessageRequest {
+  string guid  = 1;
+  oneof action{
+    Register register = 2;
+    TextMessage text_message = 3;
+    VoiceMessage voice_message = 4;
+    Ping ping = 5;
+  }
+}
+
+message Register{
+  string password = 2;
+}
+
+message TextMessage{
+  string message = 1;
+}
+
+message VoiceMessage{
+  bytes message = 1;
+}
+
+message Ping{
+  bool alive = 1;
+}
+
+// The response message containing the string.
+message MessageResponse {
+  string guid = 1;
+  Data data = 2;
+}
+
+message Data{
+    string text_message = 1;
+}

@@ -6,3 +6,5 @@ gRPC.ProtoLib/bin
 gRPC.ProtoLib/obj
 gRPC.Server/bin/Debug
 gRPC.Server/obj
+Server.BidirectionalStream/bin
+Server.BidirectionalStream/obj

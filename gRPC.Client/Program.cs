@@ -22,6 +22,7 @@ namespace gRPC.Client
         {
             _channel = new Channel($"{_ip}:{_port}", ChannelCredentials.Insecure);
             _client = new PresentationService.PresentationServiceClient(_channel);
+            var guid = Guid.NewGuid().ToString();
 
             var e = _client?.EstablishConnection(new Metadata
             {
@@ -35,7 +36,7 @@ namespace gRPC.Client
                     Console.WriteLine("Try reconnect...");
                     e = _client?.EstablishConnection(new Metadata
                     {
-                        new ("clientId",Guid.NewGuid().ToString())
+                        new ("clientId",guid)
                     });
                     await Task.Delay(2000);
                 }
@@ -44,8 +45,15 @@ namespace gRPC.Client
             while (e is not null)
             {
                 //Console.Write("Type you client message :");
-                var msg = Console.ReadLine();
-                e?.Receive(msg);
+                //var msg = Console.ReadLine();
+                //e?.Receive(msg);
+
+                while (true)
+                {
+                    e?.Receive($"Hello from me {guid}");
+                    Task.Delay(100).Wait();
+                }
+                
             }
             
             Console.ReadLine();
