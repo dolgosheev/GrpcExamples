@@ -8,3 +8,5 @@ gRPC.Server/bin/Debug
 gRPC.Server/obj
 Server.BidirectionalStream/bin
 Server.BidirectionalStream/obj
+Client.BidirectionalStream/bin
+Client.BidirectionalStream/obj
