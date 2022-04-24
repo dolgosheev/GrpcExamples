@@ -3,7 +3,6 @@ using System.Reflection;
 
 using Grpc.Core;
 
-
 using PresentationService;
 
 using Server.BidirectionalStream.ServicesInterfaces;
@@ -12,8 +11,8 @@ namespace Server.BidirectionalStream.Services;
 
 public class CacheService : ICacheAsync
 {
-    private readonly object _locker = new();
     private readonly ConcurrentDictionary<IServerStreamWriter<MessageResponse>, string> _clients = new();
+    private readonly object _locker = new();
     private readonly ILogger<CacheService> _logger;
 
     public CacheService(ILogger<CacheService> logger)
@@ -54,6 +53,60 @@ public class CacheService : ICacheAsync
                 if (result)
                 {
                     _logger.LogInformation("Client {Guid} stream has been removed", clientGuid);
+                    return Task.FromResult(true);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    "An error has been occured | Called method {Caller} | Exception type {ExceptionType} | Exception {Exception} | InnerException {InnerException}",
+                    MethodBase.GetCurrentMethod()?.Name, typeof(Exception), e.Message, e.InnerException?.Message);
+            }
+        }
+
+        return Task.FromResult(false);
+    }
+
+    public Task<bool> SendDataBroadcast(MessageResponse message)
+    {
+        lock (_locker)
+        {
+            try
+            {
+                foreach (var (stream, clientGuid) in _clients)
+                {
+                    var status = stream.WriteAsync(message);
+                    if (status is {IsCompleted: true})
+                        _logger.LogInformation("Message for client {Guid} was sent", clientGuid);
+                }
+
+                return Task.FromResult(true);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    "An error has been occured | Called method {Caller} | Exception type {ExceptionType} | Exception {Exception} | InnerException {InnerException}",
+                    MethodBase.GetCurrentMethod()?.Name, typeof(Exception), e.Message, e.InnerException?.Message);
+            }
+        }
+
+        return Task.FromResult(false);
+    }
+
+    public Task<bool> SendDataToClient(MessageResponse message, string clientGuid)
+    {
+        lock (_locker)
+        {
+            try
+            {
+                var stream = _clients
+                    .FirstOrDefault(s => s.Value.Equals(clientGuid)).Key;
+
+                var status = stream.WriteAsync(message);
+
+                if (status.IsCompleted)
+                {
+                    _logger.LogInformation("Message for client {Guid} was sent", clientGuid);
                     return Task.FromResult(true);
                 }
             }

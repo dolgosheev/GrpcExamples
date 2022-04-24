@@ -32,6 +32,15 @@ message MessageRequest {
   }
 }
 
+// The response message containing the string.
+message MessageResponse {
+  oneof action{
+    TextMessage text_message = 1;
+    VoiceMessage voice_message = 2;
+    Ping ping = 3;
+  }
+}
+
 message Register{
   string password = 2;
 }
@@ -48,12 +57,3 @@ message Ping{
   bool alive = 1;
 }
 
-// The response message containing the string.
-message MessageResponse {
-  string guid = 1;
-  Data data = 2;
-}
-
-message Data{
-    string text_message = 1;
-}
