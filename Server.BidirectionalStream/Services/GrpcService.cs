@@ -1,5 +1,7 @@
 using System.Reflection;
 
+using Google.Protobuf.WellKnownTypes;
+
 using Grpc.Core;
 
 using PresentationService;
@@ -47,7 +49,8 @@ public class GrpcService : PresentationService.PresentationService.PresentationS
                 {
                     TextMessage = new TextMessage
                     {
-                        Message = messageData
+                        Message = messageData,
+                        Time = null //Timestamp.FromDateTimeOffset(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc))
                     }
                 };
                 var result = string.IsNullOrWhiteSpace(privateMessage)
