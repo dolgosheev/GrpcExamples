@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.BidirectionalStream"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.BidirectionalStream", "Client.BidirectionalStream\Client.BidirectionalStream.csproj", "{D57DF0E5-B193-46E4-97A8-B4E39364584F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.ServerStream", "Server.ServerStream\Server.ServerStream.csproj", "{76BD56B8-3A3F-4ED3-AEA9-8F2B68C76CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.ServerStraem", "Client.ServerStraem\Client.ServerStraem.csproj", "{6A3D9BB5-5159-4C65-B676-936A665C618C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{D57DF0E5-B193-46E4-97A8-B4E39364584F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57DF0E5-B193-46E4-97A8-B4E39364584F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D57DF0E5-B193-46E4-97A8-B4E39364584F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76BD56B8-3A3F-4ED3-AEA9-8F2B68C76CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BD56B8-3A3F-4ED3-AEA9-8F2B68C76CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BD56B8-3A3F-4ED3-AEA9-8F2B68C76CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BD56B8-3A3F-4ED3-AEA9-8F2B68C76CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A3D9BB5-5159-4C65-B676-936A665C618C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3D9BB5-5159-4C65-B676-936A665C618C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3D9BB5-5159-4C65-B676-936A665C618C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3D9BB5-5159-4C65-B676-936A665C618C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

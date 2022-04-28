@@ -110,12 +110,12 @@ Tuple<string, string> GetMessageData(MessageResponse message)
     switch (message.ActionCase)
     {
         case MessageResponse.ActionOneofCase.TextMessage:
-            var time = message.TextMessage?.Time ?? null;
-            var msg = time is null
-                ? message.TextMessage?.Message ?? string.Empty
-                : string.Format($"[{time.ToDateTime():F}] {message.TextMessage?.Message ?? string.Empty}");
+            //var time = message.TextMessage?.Time ?? null;
+            // var msg = time is null
+            //     ? message.TextMessage?.Message ?? string.Empty
+            //     : string.Format($"[{time.ToDateTime():F}] {message.TextMessage?.Message ?? string.Empty}");
             
-            return new Tuple<string, string>(nameof(TextMessage), msg ?? string.Empty);
+            return new Tuple<string, string>(nameof(TextMessage), message.TextMessage?.Message ?? string.Empty);
         case MessageResponse.ActionOneofCase.VoiceMessage:
             return new Tuple<string, string>(nameof(VoiceMessage),
                 message.VoiceMessage?.Message?.ToBase64() ?? string.Empty);

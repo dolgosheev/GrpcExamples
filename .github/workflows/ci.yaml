@@ -1,0 +1,13 @@
+name: .NET Core CI
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+defaults:
+  run:
+    working-directory: ./
+env:
+  DEFAULT_VERSION_CHART: 0.0.1

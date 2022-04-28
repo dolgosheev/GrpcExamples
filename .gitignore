@@ -10,3 +10,7 @@ Server.BidirectionalStream/bin
 Server.BidirectionalStream/obj
 Client.BidirectionalStream/bin
 Client.BidirectionalStream/obj
+Client.ServerStraem/bin
+Client.ServerStraem/obj
+Server.ServerStream/bin
+Server.ServerStream/obj

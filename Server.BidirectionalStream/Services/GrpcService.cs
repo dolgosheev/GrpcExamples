@@ -50,7 +50,7 @@ public class GrpcService : PresentationService.PresentationService.PresentationS
                     TextMessage = new TextMessage
                     {
                         Message = messageData,
-                        Time = null //Timestamp.FromDateTimeOffset(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc))
+                        //Time = null //Timestamp.FromDateTimeOffset(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc))
                     }
                 };
                 var result = string.IsNullOrWhiteSpace(privateMessage)

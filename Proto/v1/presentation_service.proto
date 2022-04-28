@@ -17,30 +17,56 @@ import "google/protobuf/timestamp.proto";
 
 // PresentationService just for tests.
 service PresentationService {
-    rpc BidirectionalStream (stream MessageRequest) returns (stream MessageResponse) {}
-    rpc ServerStream (stream MessageRequest) returns (MessageResponse) {}
-    rpc ClientStream (MessageRequest) returns (stream MessageResponse) {}
-    rpc RequestResponse (MessageRequest) returns (MessageResponse) {}
+  rpc BidirectionalStream (stream MessageRequest) returns (stream MessageResponse) {}
+
+  rpc RegisterNewClient (RegisterNewClientRequest) returns (stream MessageResponse) {}
+  rpc SendClientMessage (SendClientMessageRequest) returns (SendClientMessageRequestResponse) {}
 }
 
 // The request message containing the string.
 message MessageRequest {
   string guid  = 1;
+  google.protobuf.Timestamp time = 2;
   oneof action{
-    Register register = 2;
-    TextMessage text_message = 3;
-    VoiceMessage voice_message = 4;
-    Ping ping = 5;
+    Register register = 3;
+    TextMessage text_message = 4;
+    VoiceMessage voice_message = 5;
+    Ping ping = 6;
   }
 }
 
 // The response message containing the string.
 message MessageResponse {
+  google.protobuf.Timestamp timestamp = 1;
   oneof action{
-    TextMessage text_message = 1;
-    VoiceMessage voice_message = 2;
-    Ping ping = 3;
+    TextMessage text_message = 2;
+    VoiceMessage voice_message = 3;
+    Ping ping = 4;
   }
+}
+
+// Register client
+message RegisterNewClientRequest{
+  string guid  = 1;
+  google.protobuf.Timestamp time = 2;
+  Register register = 3;
+}
+
+// Send Message
+message SendClientMessageRequest{
+  string guid  = 1;
+  google.protobuf.Timestamp time = 2;
+  oneof action{
+    TextMessage text_message = 3;
+    VoiceMessage voice_message = 4;
+  }
+}
+
+// return Send message status
+message SendClientMessageRequestResponse{
+  bool status = 1;
+  string reason = 2;
+  google.protobuf.Timestamp timestamp = 3;
 }
 
 message Register{
@@ -49,7 +75,6 @@ message Register{
 
 message TextMessage{
   string message = 1;
-  optional google.protobuf.Timestamp time = 2; 
 }
 
 message VoiceMessage{
